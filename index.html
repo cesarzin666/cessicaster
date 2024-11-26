@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CESSITAR</title>
+    <title>CESSITAR 2.0</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Namaku&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
@@ -14,89 +14,27 @@
             margin: 0;
             padding: 0;
             font-family: 'Namaku', sans-serif;
+            background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
             overflow-x: hidden;
-            background-color: black;
-            border: 10px solid #00ff00;
-            box-sizing: border-box;
+            perspective: 1000px;
         }
 
-        .container {
-            max-width: 1200px;
+        /* Fondo de video */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.5) blur(2px);
         }
 
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 10vw;
-            text-transform: uppercase;
-            color: #00ff00;
-            text-shadow: 0 0 15px #00ff00;
-            transform: perspective(800px) rotateX(20deg);
-            letter-spacing: 15px;
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-
-        /* Contenedor con imagen como fondo */
-        .responsive-img-container {
-            width: 25%;                /* El contenedor ocupará todo el ancho disponible */
-            height: 400px;              /* Altura fija o ajustable */
-            background-image: url('cessitar.png'); /* URL de la imagen */
-            background-size: cover;     /* Hace que la imagen cubra el contenedor */
-            background-position: center;/* Centra la imagen dentro del contenedor */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-            display: block;
-            margin: 0 auto;
-        }
-
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            text-decoration: none;
-            color: black;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: #00ff00;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            margin: 10px;
-            min-width: 200px;
-            width: auto;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: #00cc00;
-        }
-
-        .btn i {
-            font-size: 2rem;
-        }
-
-        #particles-js {
-            position: absolute;
+        /* Partículas */
+        .particles-background {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -104,67 +42,141 @@
             z-index: -1;
         }
 
-        @media (max-width: 768px) {
-            .title {
-                font-size: 15vw;
-                letter-spacing: 10px;
-                margin-top: 10px;
-            }
+        /* Título animado */
+        .header {
+            text-align: center;
+            padding: 100px 20px;
+        }
 
-            .btn {
-                font-size: 1.2rem;
-                padding: 10px 20px;
-                min-width: 200px;
-                width: 100%;
-            }
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            color: #00ff00;
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0 0 30px #00ff00, 0 0 60px #00ff00;
+            animation: pulse 2s infinite alternate;
+        }
 
-            .buttons {
-                flex-direction: column;
-                gap: 15px;
+        .header h1 span {
+            display: inline-block;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        /* Botones futuristas */
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .button {
+            position: relative;
+            text-decoration: none;
+            background: linear-gradient(90deg, #004e92, #00ff00);
+            border-radius: 20px;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px #00ff00;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 0 50px #00ff00, 0 0 100px #00ff00;
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(45deg);
+            transition: left 0.4s;
+        }
+
+        .button:hover::after {
+            left: 100%;
+        }
+
+        /* Animaciones clave */
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+            }
+            100% {
+                text-shadow: 0 0 40px #00ff00, 0 0 80px #00ff00;
             }
         }
 
-        @media (max-width: 480px) {
-            .title {
-                font-size: 20vw;
-                letter-spacing: 5px;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
             }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
 
-            .btn {
-                font-size: 1rem;
-                padding: 8px 15px;
-                min-width: 150px;
-                width: 100%;
-            }
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1rem;
+            color: #00ff00;
+            background: rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
 <body>
+    <!-- Video de fondo -->
+    <video autoplay muted loop id="background-video">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-holographic-3d-interface-1092-large.mp4" type="video/mp4">
+    </video>
 
-    <div id="particles-js"></div>
+    <!-- Partículas -->
+    <div class="particles-background" id="particles-js"></div>
 
-    <div class="container">
-        <h1 class="title">CESSITAR</h1>
-        
-        <!-- Contenedor con imagen de fondo -->
-       
-        
-        <div class="buttons">
-            <a href="torneos.html" class="btn"><i class="fas fa-trophy"></i> Torneos</a>
-            <a href="edicion.html" class="btn"><i class="fas fa-edit"></i> Cursos de Edición</a>
-            <a href="casteo.html" class="btn"><i class="fas fa-microphone"></i> Casteos</a>
-            <a href="redes.html" class="btn"><i class="fas fa-share-alt"></i> Redes Sociales</a>
-        </div>
+    <!-- Encabezado -->
+    <div class="header">
+        <h1>
+            <span>CESSITAR</span>
+        </h1>
     </div>
 
+    <!-- Botones -->
+    <div class="buttons-container">
+        <a href="torneos.html" class="button"><i class="fas fa-trophy"></i> Torneos</a>
+        <a href="edicion.html" class="button"><i class="fas fa-edit"></i> Cursos de Edición</a>
+        <a href="casteo.html" class="button"><i class="fas fa-microphone"></i> Casteos</a>
+        <a href="redes.html" class="button"><i class="fas fa-share-alt"></i> Redes Sociales</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+       
+    </div>
+
+    <!-- Partículas JS -->
     <script>
         particlesJS('particles-js', {
             particles: {
                 number: {
-                    value: 100,
+                    value: 120,
                     density: {
                         enable: true,
-                        value_area: 800
+                        value_area: 1000
                     }
                 },
                 color: {
@@ -178,11 +190,11 @@
                     }
                 },
                 opacity: {
-                    value: 0.5,
+                    value: 0.7,
                     random: true,
                     anim: {
                         enable: true,
-                        speed: 1,
+                        speed: 0.5,
                         opacity_min: 0.1,
                         sync: false
                     }
@@ -192,7 +204,7 @@
                     random: true,
                     anim: {
                         enable: true,
-                        speed: 5,
+                        speed: 2,
                         size_min: 0.1,
                         sync: false
                     }
@@ -206,35 +218,15 @@
                 },
                 move: {
                     enable: true,
-                    speed: 2,
+                    speed: 1,
                     direction: "none",
                     random: true,
                     straight: false,
                     out_mode: "out",
-                    bounce: false,
-                    attract: {
-                        enable: false
-                    }
+                    bounce: false
                 }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: "grab"
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: "push"
-                    },
-                    resize: true
-                }
-            },
-            retina_detect: true
+            }
         });
     </script>
- <div class="responsive-img-container"></div>
 </body>
 </html>
-
